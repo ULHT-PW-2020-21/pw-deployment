@@ -184,10 +184,10 @@ web: gunicorn config.wsgi --log-file -
 * deverá criar novos dados atraves do modo admin, pois é uma base de dados nova.
 * Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
 
-[//]: # (
+<!-- 
 ## Outras referências
 * https://django-environ.readthedocs.io/en/latest/
 * https://stackoverflow.com/questions/50322966/changing-django-development-database-from-the-default-sqlite-to-postgresql
 * django-heroku
 * https://alicecampkin.medium.com/how-to-set-up-environment-variables-in-django-f3c4db78c55f
-)
+-->

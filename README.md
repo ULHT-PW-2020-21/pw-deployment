@@ -6,7 +6,8 @@ O ambiente de desenvolvimento é diferente do necessário para um site em produ�
 Vamos criar um ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar environs (eventualmente deverá precisar das plicas ''):
 ```
-pipenv install 'environs[django]==8.0.0'
+> pipenv shell
+> pipenv install 'environs[django]==8.0.0'
 ```
 
 * em `config/settings.py` adicionar no topo:
@@ -91,7 +92,6 @@ export DATABASE_URL=sqlite:///db.sqlite3
 * Heroku cria uma base de dados nova PostgreSQL, e cria uma variavel de configuração chamada `DATABASE_URL`. Como .env não é carregado no Heroku, o nosso projeto Django usará no Heroku esta configuração PosrtgreSQL.
 * com o ambiente virtual ativo, devemos instalar o adaptador de base de dados Psycopg, que põe o Python  a comunicar com bases de dados PostgreSQL.
 ```
-> pipenv shell
 > pipenv install psycopg2-binary==2.8.6
 ```
 
@@ -99,7 +99,6 @@ export DATABASE_URL=sqlite:///db.sqlite3
 ## Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
 Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros stating em produção
 ```
-> pipenv shell
 > pipenv install whitenoise==5.1.0
 ```
 * Em `settings.py` adicione (nas posições relativas identificadas com o comentario `# novo`):
@@ -129,7 +128,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 
 * corra, com o ambiente virtual ativo, o comando `collectstatic` para compilar todas as pastas e ficheiros estaticos numa unidade para deployment:
 ```
-> pipenv shell
 > python manage.py collectstatic
 ```
 * em `base.html` inclua no início a etiqueta {% load static %}, para que os templates incluam ficheiros estaticos:
@@ -143,10 +141,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ## Instale `gunicorn` como servidor web de produção
 * com o ambiente virtual ativo, instale Gunicorn como o servidow web de produção:
 ```
-> pipenv shell
 > pipenv install gunicorn==19.9.0
 ```
-* em `Procfile` informe o Heroku que usará gunicorn (especifique, antes de `.wsgi`, o nome do projeto; neste caso `config`):
+* Crie o ficheiro `Procfile`, na pasta onde está o `manage.py`, que informa o Heroku que usará gunicorn (especifique, antes de `.wsgi`, o nome do projeto; neste caso `config`):
 ```
 web: gunicorn config.wsgi --log-file -
 ```

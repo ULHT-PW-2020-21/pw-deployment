@@ -1,5 +1,5 @@
 # Configurações para ambiente de produção 🏭
-O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/):
+O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/) que se detalha a seguir.
 
 ## Variáveis de ambiente
 

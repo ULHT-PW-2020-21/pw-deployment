@@ -170,7 +170,7 @@ web: gunicorn config.wsgi --log-file -
 > heroku addons:create heroku-postgresql:hobby-dev
 ```
 * o último comando verá que indica que cria um valor para a variável DATABASE_URL
-* devemos definir apenas a SECRET_KEY, copiando de .env e correndo o comando seguinte colocando a SECRET_KEY entre plicas '':
+* devemos definir apenas a SECRET_KEY, copiando de .env e correndo o comando seguinte colocando a SECRET_KEY entre plicas ''; se na SECRET_KEY tiver carateres `&` e `)`, coloque-os entre "":
 ```
 > heroku config:set SECRET_KEY='django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy'
 > git push heroku master

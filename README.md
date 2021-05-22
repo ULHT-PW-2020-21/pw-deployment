@@ -1,15 +1,7 @@
-# pw-deployment
-
-outras referencias:
-* https://django-environ.readthedocs.io/en/latest/
-* https://stackoverflow.com/questions/50322966/changing-django-development-database-from-the-default-sqlite-to-postgresql
-* django-heroku
-* https://alicecampkin.medium.com/how-to-set-up-environment-variables-in-django-f3c4db78c55f
-
 # Configurações para ambiente de produção 🏭
 O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/):
 
-### Variáveis de ambiente
+## Variáveis de ambiente
 
 Vamos criar um ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar `pipenv install 'environs[django]==8.0.0'`  (eventualmente deverá precisar das plicas ')
@@ -27,7 +19,7 @@ env.read_env()
 * crie um novo ficheiro chamado .env na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
 
 
-### .gitignore
+## .gitignore
 * crie o ficheiro `.gitignore` indicando os ficheiros a ser ignorados pelo GIT:
 ```
 .env
@@ -191,3 +183,9 @@ web: gunicorn config.wsgi --log-file -
 ```
 * deverá criar novos dados atraves do modo admin, pois é uma base de dados nova.
 * Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
+
+## Outras referências
+* https://django-environ.readthedocs.io/en/latest/
+* https://stackoverflow.com/questions/50322966/changing-django-development-database-from-the-default-sqlite-to-postgresql
+* django-heroku
+* https://alicecampkin.medium.com/how-to-set-up-environment-variables-in-django-f3c4db78c55f

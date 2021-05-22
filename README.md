@@ -16,7 +16,7 @@ env.read_env()
 
 [...]
 ```
-* crie um novo ficheiro chamado .env na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
+* crie um novo ficheiro chamado `.env` na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
 
 
 ## .gitignore
@@ -36,7 +36,7 @@ db.sqlite3
 export DEBUG=True 
 ```
 
-* Em config/settings.py insira:
+* Em `config/settings.py` insira:
 ```python
 # config/settings.py
 [...]
@@ -45,7 +45,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ```
 
 ## ALLOWED HOSTS
-* inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS, em settings.py:
+* Em `settings.py`inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS:
 ```python
 # config/settings.py
 [...]
@@ -55,13 +55,14 @@ ALLOWED_HOSTS = ['a-minha-app-heroku.herokuapp.com', 'localhost', '127.0.0.1']
 
 ## Use uma variável de ambiente para a SECRET_KEY
 
-* Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas '):
+* Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas ').
+* Em `.env` insira:
 ```
 export DEBUG=True 
 export SECRET_KEY=django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy
 ```
 
-* utilize a variável de ambiente em settings.py: 
+* em `settings.py` utilize a variável de ambiente para SECRET_KEY: 
 ```python
 # config/settings.py
 
@@ -73,7 +74,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 
 * em ambiente de desenvolvimento local, usamos a base de dados SQLite. Mas em produção (no Heroku) devemos usar PostgreSQL, pois o ficheiro db.sqlite é apagado pelo Heroku.
 * O módulo instalado environs[django] trata de todas as configurações necessárias
-* atualize settings.py com:
+* atualize `settings.py` com:
 ```python
 # config/settings.py
 
@@ -81,7 +82,7 @@ DATABASES = {
       "default": env.dj_db_url("DATABASE_URL") 
  }
 ```
-* em .env especifique:
+* em `.env` especifique:
 ```
 export DATABASE_URL=sqlite:///db.sqlite3
 ```
@@ -99,7 +100,7 @@ Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de fi
 > pipenv shell
 > pipenv install whitenoise==5.1.0
 ```
-Devemos adicionar em settings.py (nas posições relativas indicadas, veja o comentario `# novo`):
+* Em `settings.py` adicione (nas posições relativas indicadas, veja o comentario `# novo`):
 ```python
 # config/settings.py
 
@@ -129,7 +130,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 > pipenv shell
 > python manage.py collectstatic
 ```
-* como passo final, para que os templates incluam ficheiros estaticos, devem ser carregados usando a etiqueta {% load static %} no inicio de base.html:
+* em `base.html` inclua no início a etiqueta {% load static %}, para que os templates incluam ficheiros estaticos:
 ```html
 <!-- templates/base.html -->
 {% load static %}
@@ -138,12 +139,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ```
 
 ## Instale `gunicorn` como servidor web de produção
-* com o ambiente virtual ativo, instale Gunicorcomo o servidow web de produção:
+* com o ambiente virtual ativo, instale Gunicorn como o servidow web de produção:
 ```
 > pipenv shell
 > pipenv install gunicorn==19.9.0
 ```
-* Informe o Heroku, através do ficheiro Procfile, que usará gunicorn (especifique, antes de `.wsgi`, o nome do projeto; neste caso `config`):
+* em `Procfile` informe o Heroku que usará gunicorn (especifique, antes de `.wsgi`, o nome do projeto; neste caso `config`):
 ```
 web: gunicorn config.wsgi --log-file -
 ```

@@ -174,9 +174,9 @@ web: gunicorn config.wsgi --log-file -
 ```
 > heroku config:set SECRET_KEY='django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy'
 > git push heroku master
-> heroku ps:Scale web=1
+> heroku ps:scale web=1
 ```
-* aparecerá o URL da sua aplicação, ou pode lançá-la com o comando `heroku open`. Não corre ainda pois precisa migrar para a nova base de dados no Heroku:
+* aparecerá o URL da sua aplicação, ou pode lançá-la com o comando `heroku open`. Não corre (aparecerá `Server Error 500`) pois ainda precisa migrar para a nova base de dados no Heroku:
 ```
 > heroku run python manage.py migrate
 > heroku run python manage.py createsuperuser

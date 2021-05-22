@@ -100,7 +100,7 @@ Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de fi
 > pipenv shell
 > pipenv install whitenoise==5.1.0
 ```
-* Em `settings.py` adicione (nas posições relativas indicadas, veja o comentario `# novo`):
+* Em `settings.py` adicione (nas posições relativas identificadas com o comentario `# novo`):
 ```python
 # config/settings.py
 

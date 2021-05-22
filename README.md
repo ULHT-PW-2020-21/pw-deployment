@@ -39,7 +39,7 @@ db.sqlite3
 export DEBUG=True 
 ```
 
-* Em `config/settings.py` insira:
+* Em `config/settings.py` altere o valor para DEBUG:
 ```python
 # config/settings.py
 [...]

@@ -1,5 +1,5 @@
-# Configurações para ambiente de produção 🏭
-O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/) que se detalha a seguir.
+# Configurações para Deployment em Heroku em ambiente de produção 🏭
+O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma série de passos que se detalham a seguir.
 
 ## Variáveis de ambiente
 
@@ -185,8 +185,9 @@ web: gunicorn config.wsgi --log-file -
 * Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
 
 ## Referências
-William Vincent, *Django for beginners*, 2020
-
+* William Vincent, *Django for beginners*, 2020
+* DjangoProject, *[Deployment checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/)*
+* [learndjango](https://learndjango.com/)
 <!-- 
 ## Outras referências
 * https://django-environ.readthedocs.io/en/latest/

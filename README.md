@@ -50,7 +50,7 @@ DEBUG = env.bool("DEBUG", default=False)
 # config/settings.py
 [...]
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['a-minha-app-heroku.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
 ## Use uma variável de ambiente para a SECRET_KEY

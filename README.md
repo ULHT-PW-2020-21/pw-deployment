@@ -37,9 +37,8 @@ db.sqlite3
 ```
 * o facto de não carregarmos `.env` para o Heroku permite que certas configurações só estejam ativas no ambiente de desenvolvimento.
 
-### Debug e ALLOWED HOSTS
-* vamos especificar para que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
-* inclua também o URL da aplicação Heroku como host.
+### Debug 
+* É necessário especificar que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
 * em `.env` insira:
 ```
 export DEBUG=True 
@@ -51,13 +50,20 @@ export DEBUG=True
 [...]
 
 DEBUG = env.bool("DEBUG", default=False)
+```
+
+### ALLOWED HOSTS
+* inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS, em settings.py:
+```python
+# config/settings.py
+[...]
+
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
+### Use uma variável de ambiente para a SECRET_KEY
 
-### Chave secreta
-
-* Vamos mover o valor da variável SECRET_KEY de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas '):
+* Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas '):
 ```
 export DEBUG=True 
 export SECRET_KEY=django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy
@@ -71,7 +77,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 ```
 
 
-### Base de dados PostgreSQL
+### Atualise DATABASES para usar SQLite localmente e PostgreSQL em produção
 
 * em ambiente de desenvolvimento local, usamos a base de dados SQLite. Mas em produção (no Heroku) devemos usar PostgreSQL, pois o ficheiro db.sqlite é apagado pelo Heroku.
 * O módulo instalado environs[django] trata de todas as configurações necessárias
@@ -95,7 +101,7 @@ export DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 
-### Configurar ficheiros estaticos
+### Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
 Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros stating em produção
 ```
 > pipenv shell
@@ -139,14 +145,49 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ...
 ```
 
+### Instale `gunicorn` como servidor web de produção
+* com o ambiente virtual ativo, instale Gunicorcomo o servidow web de produção:
+```
+> pipenv shell
+> pipenv install gunicorn==19.9.0
+```
+* Informe o Heroku, através do ficheiro Procfile, que usará gunicorn (especifique, antes de `.wsgi`, o nome do projeto; neste caso `config`):
+```
+web: gunicorn config.wsgi --log-file -
+```
+### Git & GitHub
 
-### Instalar Gunicorn como servidor web de produção
+* Inicialize o repositorio Git, com ambiente virtual ativo:
+```
+> git status
+> git add -A
+> git commit -m "commit inicial"
+```
+* crie um repositório no GitHub para guardar o código e utilize o URL deste para fazer comandos finais (substitua pelo inserido `https://github.com/username/repositorio`):
+```
+> git remote add origin https://github.com/username/repositorio
+> git push -u origin master
+```
 
-### Criar o `Procfile`
-
-### Criar novo projeto Heroku e fazer push do código para Heroku
-
-### Correr `heroku ps:scale web=1` para arrancar um processo web dyno
-
-### `Debug` colocado a `False`
-
+### Deployment no Heroku
+* Crie a aplicação Heroku:
+```
+> heroku login
+> heroku create minha-app-heroku
+> heroku git:remote -a minha-app-heroku
+> heroku addons:creste heroku-postgresql:hobby-dev
+```
+* o último comando verá que indica que cria um valor para a variável DATABASE_URL
+* devemos definir apenas a SECRET_KEY, copiando de .env e correndo o comando seguinte colocando a SECRET_KEY entre plicas '':
+```
+> heroku config:set SECRET_KEY='django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy'
+> git push heroku master
+> heroku ps:Scale web=1
+```
+* aparecerá o URL da sua aplicação, ou pode lançá-la com o comando `heroku open`. Não corre ainda pois precisa migrar para a nova base de dados no Heroku:
+```
+> heroku run python manage.py migrate
+> heroku run python manage.py createsuperuser
+```
+* deverá criar novos dados atraves do modo admin, pois é uma base de dados nova.
+* Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  

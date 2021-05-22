@@ -28,20 +28,19 @@ env.read_env()
 
 
 ### .gitignore
-* Estamos a usar Git para controlo de fonte, e não queremos carregar tudo. Ignoremos alguns ficheiros.
-* crie o ficheiro `.gitignore` com o seguinte conteúdo:
+* crie o ficheiro `.gitignore` indicando os ficheiros a ser ignorados pelo GIT:
 ```
 .env
 __pycache__/
 db.sqlite3
-.DS_Store  # só para Mac
+.DS_Store   # só para Mac
 ```
-
+* o facto de não carregarmos `.env` para o Heroku permite que certas configurações só estejam ativas no ambiente de desenvolvimento.
 
 ### Debug e ALLOWED HOSTS
-* em desenvolvimento, é util o modo DEBUG, mas em desenvolvimento devemos alterar. Devemos tambem incluir o URL da aplicação Heroku como host. 
-
-* em .env insira:
+* vamos especificar para que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
+* inclua também o URL da aplicação Heroku como host.
+* em `.env` insira:
 ```
 export DEBUG=True 
 ```
@@ -54,7 +53,6 @@ export DEBUG=True
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 ```
-* isto permite que em desenvolvimento, DEBUG continue True, mas quando passarmos para produção, visto o .env não ser enviado para o Heroku (está no .gitignore), ficar False.
 
 
 ### Chave secreta
@@ -98,8 +96,48 @@ export DATABASE_URL=sqlite:///db.sqlite3
 
 
 ### Configurar ficheiros estaticos
-Devemos configurar ficheiros estáticos, instalanr `whitenooise` e correr `collectstatic`
+Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros stating em produção
+```
+> pipenv shell
+> pipenv install whitenoise==5.1.0
+```
+Devemos adicionar em settings.py (nas posições relativas indicadas, veja o comentario `# novo`):
+```python
+# config/settings.py
 
+INSTALLED_APPS = [
+    ...
+    'whitenoise.runserver_nostatic',  # novo   
+    'django.contrib.staticfiles',
+]
+
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',        
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    # novo
+    ...
+]
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]  # novo
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))   # novo
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # novo
+
+```
+
+* corra, com o ambiente virtual ativo, o comando `collectstatic` para compilar todas as pastas e ficheiros estaticos numa unidade para deployment:
+```
+> pipenv shell
+> python manage.py collectstatic
+```
+* como passo final, para que os templates incluam ficheiros estaticos, devem ser carregados usando a etiqueta {% load static %} no inicio de base.html:
+```html
+<!-- templates/base.html -->
+{% load static %}
+<html>
+...
+```
 
 
 ### Instalar Gunicorn como servidor web de produção

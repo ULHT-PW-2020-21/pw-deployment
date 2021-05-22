@@ -61,7 +61,6 @@ ALLOWED_HOSTS = ['a-minha-app-heroku.herokuapp.com', 'localhost', '127.0.0.1']
 * Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas ').
 * Em `.env` insira:
 ```
-export DEBUG=True 
 export SECRET_KEY=django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy
 ```
 

@@ -29,7 +29,7 @@ db.sqlite3
 ```
 * o facto de não carregarmos `.env` para o Heroku permite que certas configurações só estejam ativas no ambiente de desenvolvimento.
 
-### Debug 
+## Debug 
 * É necessário especificar que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
 * em `.env` insira:
 ```
@@ -44,7 +44,7 @@ export DEBUG=True
 DEBUG = env.bool("DEBUG", default=False)
 ```
 
-### ALLOWED HOSTS
+## ALLOWED HOSTS
 * inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS, em settings.py:
 ```python
 # config/settings.py
@@ -53,7 +53,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
-### Use uma variável de ambiente para a SECRET_KEY
+## Use uma variável de ambiente para a SECRET_KEY
 
 * Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas '):
 ```
@@ -69,7 +69,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 ```
 
 
-### Atualise DATABASES para usar SQLite localmente e PostgreSQL em produção
+## Atualise DATABASES para usar SQLite localmente e PostgreSQL em produção
 
 * em ambiente de desenvolvimento local, usamos a base de dados SQLite. Mas em produção (no Heroku) devemos usar PostgreSQL, pois o ficheiro db.sqlite é apagado pelo Heroku.
 * O módulo instalado environs[django] trata de todas as configurações necessárias
@@ -93,7 +93,7 @@ export DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 
-### Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
+## Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
 Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros stating em produção
 ```
 > pipenv shell
@@ -137,7 +137,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ...
 ```
 
-### Instale `gunicorn` como servidor web de produção
+## Instale `gunicorn` como servidor web de produção
 * com o ambiente virtual ativo, instale Gunicorcomo o servidow web de produção:
 ```
 > pipenv shell
@@ -147,7 +147,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ```
 web: gunicorn config.wsgi --log-file -
 ```
-### Git & GitHub
+## Git & GitHub
 
 * Inicialize o repositorio Git, com ambiente virtual ativo:
 ```
@@ -161,7 +161,7 @@ web: gunicorn config.wsgi --log-file -
 > git push -u origin master
 ```
 
-### Deployment no Heroku
+## Deployment no Heroku
 * Crie a aplicação Heroku:
 ```
 > heroku login

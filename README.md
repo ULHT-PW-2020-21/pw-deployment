@@ -4,25 +4,31 @@ outras referencias:
 * https://django-environ.readthedocs.io/en/latest/
 * https://stackoverflow.com/questions/50322966/changing-django-development-database-from-the-default-sqlite-to-postgresql
 * django-heroku
+* https://alicecampkin.medium.com/how-to-set-up-environment-variables-in-django-f3c4db78c55f
 
 # Configurações para ambiente de produção 🏭
 O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/):
 
 ### Variáveis de ambiente
+
+Vamos criar um ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar `pipenv install 'environs[django]==8.0.0'`  (eventualmente deverá precisar das plicas ')
-* em `config/settings.py` adicionar no topo do ficheiro:
+
+* em `config/settings.py` adicionar no topo:
 ```python
 # config/settings.py
-from environs import Env  # novo
+from environs import Env 
 
-env = Env()  # novo
-env.read_env()  # novo
+env = Env()
+env.read_env()
+
+[...]
 ```
-* crie um novo ficheiro chamado .env na mesma pasta que contém o manage.py. Qualquer ficheiro iniciado com ponto, como .env, é um ficheiro escondido (hidden file), não sendo listado com ls.
+* crie um novo ficheiro chamado .env na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
 
 
 ### .gitignore
-* Estamos a usar Git para controlo de fonte, nas não queremos seguir (*track*) tudo. Ignoremos alguns ficheiros.
+* Estamos a usar Git para controlo de fonte, e não queremos carregar tudo. Ignoremos alguns ficheiros.
 * crie o ficheiro `.gitignore` com o seguinte conteúdo:
 ```
 .env
@@ -33,42 +39,63 @@ db.sqlite3
 
 
 ### Debug e ALLOWED HOSTS
-* em desenvolvimento, é util o modo DEBUG. Em desenvolvimento devemos alterar. Deve tambem indicar Heroku como host. Em config/settings.py insira :
-```python
-# config/settings.py
-DEBUG = env.bool("DEBUG", default=False)
+* em desenvolvimento, é util o modo DEBUG, mas em desenvolvimento devemos alterar. Devemos tambem incluir o URL da aplicação Heroku como host. 
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
-```
 * em .env insira:
 ```
 export DEBUG=True 
 ```
-* isto permite que em desenvolvimento, continue True, mas quando passarmos para produção, visto o .env não ser enviado para o Heroku (está no .gitignore), ficar False.
 
-
-### Guardar `SECRET_KEY` secreta
-* A variável SECRET_KEY é definida em settings.py quando é criado um novo projeto. 
+* Em config/settings.py insira:
 ```python
 # config/settings.py
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy'
+[...]
 
+DEBUG = env.bool("DEBUG", default=False)
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+```
+* isto permite que em desenvolvimento, DEBUG continue True, mas quando passarmos para produção, visto o .env não ser enviado para o Heroku (está no .gitignore), ficar False.
+
+
+### Chave secreta
+
+* Vamos mover o valor da variável SECRET_KEY de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas '):
+```
+export DEBUG=True 
+export SECRET_KEY=django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy
 ```
 
-* Vamos removê-la e guardá-la no ficheiro .env
-```
+* utilize a variável de ambiente em settings.py: 
+```python
+# config/settings.py
+
 SECRET_KEY = env.str("SECRET_KEY")
 ```
 
 
-* Passe-a como uma variável para settings. 
+### Base de dados PostgreSQL
+
+* em ambiente de desenvolvimento local, usamos a base de dados SQLite. Mas em produção (no Heroku) devemos usar PostgreSQL, pois o ficheiro db.sqlite é apagado pelo Heroku.
+* O módulo instalado environs[django] trata de todas as configurações necessárias
+* atualize settings.py com:
 ```python
 # config/settings.py
 
-SECRET_KEY = env.str("SECRET_KEY")
+DATABASES = {
+      "default": env.dj_db_url("DATABASE_URL") 
+ }
 ```
-* e guardá-la no ficheiro
+* em .env especifique:
+```
+export DATABASE_URL=sqlite:///db.sqlite3
+```
+* Heroku cria uma base de dados nova PostgreSQL, e cria uma variavel de configuração chamada `DATABASE_URL`. Como .env não é carregado no Heroku, o nosso projeto Django usará no Heroku esta configuração PosrtgreSQL.
+* com o ambiente virtual ativo, devemos instalar o adaptador de base de dados Psycopg, que põe o Python  a comunicar com bases de dados PostgreSQL.
+```
+> pipenv shell
+> pipenv install psycopg2-binary==2.8.6
+```
+
 
 ### Configurar ficheiros estaticos
 Devemos configurar ficheiros estáticos, instalanr `whitenooise` e correr `collectstatic`
@@ -85,5 +112,3 @@ Devemos configurar ficheiros estáticos, instalanr `whitenooise` e correr `colle
 
 ### `Debug` colocado a `False`
 
-
-### Base de dados de produção, não SQLite

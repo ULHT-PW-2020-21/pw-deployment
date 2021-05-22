@@ -184,6 +184,9 @@ web: gunicorn config.wsgi --log-file -
 * deverá criar novos dados atraves do modo admin, pois é uma base de dados nova.
 * Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
 
+## Referências
+William Vincent, *Django for beginners*, 2020
+
 <!-- 
 ## Outras referências
 * https://django-environ.readthedocs.io/en/latest/

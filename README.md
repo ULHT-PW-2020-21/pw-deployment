@@ -1,5 +1,9 @@
 # pw-deployment
 
+outras referencias:
+* https://django-environ.readthedocs.io/en/latest/
+* https://stackoverflow.com/questions/50322966/changing-django-development-database-from-the-default-sqlite-to-postgresql
+* django-heroku
 
 # Configurações para ambiente de produção 🏭
 O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma [checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/):

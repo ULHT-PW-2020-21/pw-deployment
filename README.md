@@ -175,7 +175,7 @@ web: gunicorn config.wsgi --log-file -
 > heroku login
 > heroku create minha-app-heroku
 > heroku git:remote -a minha-app-heroku
-> heroku addons:creste heroku-postgresql:hobby-dev
+> heroku addons:create heroku-postgresql:hobby-dev
 ```
 * o último comando verá que indica que cria um valor para a variável DATABASE_URL
 * devemos definir apenas a SECRET_KEY, copiando de .env e correndo o comando seguinte colocando a SECRET_KEY entre plicas '':

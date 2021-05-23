@@ -2,10 +2,10 @@
 
 * Para tornar uma aplicação visível na Internet temos que fazer implantação (*deployment*) do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
 * Várias coisas devem ser feitas. 
+    * Várias configurações devem ser adaptadas caso estejamos em ambiente de produção
     * Devemos usar um serviço de Web hosting (usaremos Heroku)
     * O servidor Web do Django para uso local é básico, não serve para produção (usaremos gunicorn). 
-    * A base de dados SQLite só serve em ambiente de desenvolvimento, devendo ser usada uma outra (usaremos PostgreSQL). 
-    * Várias configurações devem também ser adaptadas caso estejamos em ambiente de produção.
+    * A base de dados SQLite só serve em ambiente de desenvolvimento, devendo ser usada uma outra (usaremos PostgreSQL). .
     * Os ficheiros estáticos devem ser configurados para ambiente produção.
 * A seguir detalham-se todos os passos necessários.
 

@@ -197,6 +197,7 @@ web: gunicorn config.wsgi --log-file -
 * William Vincent, *Django for beginners*, 2020
 * DjangoProject, *[Deployment checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/)*
 * [learndjango](https://learndjango.com/)
+* Heroku, *Django assets* (https://devcenter.heroku.com/articles/django-assets)
 <!-- 
 ## Outras referências
 * https://django-environ.readthedocs.io/en/latest/

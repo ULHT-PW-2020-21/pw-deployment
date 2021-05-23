@@ -1,6 +1,6 @@
-# Configurações para Deployment em Heroku em ambiente de produção 🏭
+# Configurações para implantação em ambiente de produção Heroku 🏭
 
-* Para tornar uma aplicação visível na Internet temos que fazer *deploy* do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
+* Para tornar uma aplicação visível na Internet temos que fazer implantação (*deployment*) do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
 * Várias coisas devem ser feitas. 
     * Devemos usar um serviço de Web hosting (usaremos Heroku)
     * O servidor Web do Django para uso local é básico, não serve para produção (usaremos gunicorn). 

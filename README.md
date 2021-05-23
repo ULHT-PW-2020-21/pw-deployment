@@ -65,7 +65,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ['a-minha-app-heroku.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
-## 5. Variável de ambiente para a SECRET_KEY
+## 5. SECRET_KEY
 
 * Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas ').
 * Em `.env` insira:

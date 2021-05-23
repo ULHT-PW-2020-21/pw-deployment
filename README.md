@@ -1,4 +1,4 @@
-# Configurações para implantação em ambiente de produção Heroku 🏭
+# Configurações para implantação em ambiente de produção no Heroku 🏭
 
 * Para tornar uma aplicação visível na Internet temos que fazer implantação (*deployment*) do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
 * Várias coisas devem ser feitas. 

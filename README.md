@@ -1,4 +1,4 @@
-# Implantação duma aplicação Django num ambiente de produção no Heroku 🏭
+# 10 passos para implantação duma aplicação Django num ambiente de produção no Heroku 🏭
 
 * Para tornar uma aplicação visível na Internet temos que fazer implantação (*deployment*) do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
 * Várias coisas devem ser feitas. 
@@ -9,7 +9,7 @@
     * Os ficheiros estáticos devem ser configurados para ambiente produção.
 * A seguir detalham-se todos os passos necessários.
 
-## Variáveis de ambiente
+## 1. Variáveis de ambiente
 
 Vamos criar um ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar environs (eventualmente deverá precisar das plicas ''):
@@ -31,7 +31,7 @@ env.read_env()
 * crie um novo ficheiro chamado `.env` na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
 
 
-## .gitignore
+## 2. .gitignore
 * crie o ficheiro `.gitignore` indicando os ficheiros a ser ignorados pelo GIT:
 ```
 .env
@@ -41,7 +41,7 @@ db.sqlite3
 ```
 * o facto de não carregarmos `.env` para o Heroku permite que certas configurações só estejam ativas no ambiente de desenvolvimento.
 
-## Debug 
+## 3. Debug 
 * É necessário especificar que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
 * em `.env` insira:
 ```
@@ -56,7 +56,7 @@ export DEBUG=True
 DEBUG = env.bool("DEBUG", default=False)
 ```
 
-## ALLOWED HOSTS
+## 4. ALLOWED HOSTS
 * Em `settings.py`inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS:
 ```python
 # config/settings.py
@@ -65,7 +65,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ['a-minha-app-heroku.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
-## Use uma variável de ambiente para a SECRET_KEY
+## 5. Variável de ambiente para a SECRET_KEY
 
 * Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas ').
 * Em `.env` insira:
@@ -81,7 +81,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 ```
 
 
-## Atualise DATABASES para usar SQLite localmente e PostgreSQL em produção
+## 6. Atualização de DATABASES para usar SQLite localmente e PostgreSQL em produção
 
 * em ambiente de desenvolvimento local, usamos a base de dados SQLite. Mas em produção (no Heroku) devemos usar PostgreSQL, pois o ficheiro db.sqlite é apagado pelo Heroku.
 * O módulo instalado environs[django] trata de todas as configurações necessárias
@@ -104,8 +104,9 @@ export DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 
-## Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
-* Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros staticos em produção:
+## 7. Configuração dos ficheiros estáticos
+* Django não suporta o "serviço" de ficheiros staticos em produção
+* Devemos instalar o pacote `whitenoise` para *static file hosting*:
 ```
 > pipenv install whitenoise==5.1.0
 ```
@@ -147,7 +148,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ...
 ```
 
-## Instale `gunicorn` como servidor web de produção
+## 8. Instalação de `gunicorn`, servidor web de produção
 * com o ambiente virtual ativo, instale Gunicorn como o servidow web de produção:
 ```
 > pipenv install gunicorn==19.9.0
@@ -156,7 +157,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ```
 web: gunicorn config.wsgi --log-file -
 ```
-## Git & GitHub
+## 9. Git & GitHub
 
 * Inicialize o repositorio Git, com ambiente virtual ativo:
 ```
@@ -170,7 +171,7 @@ web: gunicorn config.wsgi --log-file -
 > git push -u origin master
 ```
 
-## Deployment no Heroku
+## 10. Deployment no Heroku
 * Crie a aplicação Heroku:
 ```
 > heroku login

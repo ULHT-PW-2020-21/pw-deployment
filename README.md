@@ -32,7 +32,7 @@ env.read_env()
 
 
 ## 2. .gitignore
-* crie o ficheiro `.gitignore` indicando os ficheiros a ser ignorados pelo GIT:
+* crie o ficheiro `.gitignore` na diretoria do `manage.py`, indicando os ficheiros a ser ignorados pelo GIT:
 ```
 .env
 __pycache__/

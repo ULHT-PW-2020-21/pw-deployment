@@ -1,5 +1,13 @@
 # Configurações para Deployment em Heroku em ambiente de produção 🏭
-O ambiente de desenvolvimento é diferente do necessário para um site em produção. A sua configuração requer seguir uma série de passos que se detalham a seguir.
+
+* Para tornar uma aplicação visível na Internet temos que fazer *deploy* do código num servidor e base de dados externa. Chama-se isto pôr o código em ambiente de produção.
+* Várias coisas devem ser feitas. 
+    * Devemos usar um serviço de Web hosting (usaremos Heroku)
+    * O servidor Web do Django para uso local é básico, não serve para produção (usaremos gunicorn). 
+    * A base de dados SQLite só serve em ambiente de desenvolvimento, devendo ser usada uma outra (usaremos PostgreSQL). 
+    * Várias configurações devem também ser adaptadas caso estejamos em ambiente de produção.
+    * Os ficheiros estáticos devem ser configurados para ambiente produção.
+* A seguir detalham-se todos os passos necessários.
 
 ## Variáveis de ambiente
 
@@ -97,11 +105,12 @@ export DATABASE_URL=sqlite:///db.sqlite3
 
 
 ## Configure os ficheiros estáticos, instale `whitenoise` para *static file hosting*
-Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros stating em produção
+* Devemos instalar o pacote WhiteNoise pois Django não suporta o "serviço" de ficheiros staticos em produção:
 ```
 > pipenv install whitenoise==5.1.0
 ```
-* Em `settings.py` adicione (nas posições relativas identificadas com o comentario `# novo`):
+* Em `settings.py` adicione as seguintes instruções (nas posições relativas identificadas com o comentario `# novo`). 
+* Pormenor importante: em STATICFILES_DIRS, deve especificar onde se encontram as pastas static da(s) aplicação(ões) do projeto. Ou seja, tipicamente terá `STATICFILES_DIRS = [str(BASE_DIR.joinpath('app/static'))]` onde app é o nome de cada aplicação:
 ```python
 # config/settings.py
 
@@ -120,8 +129,8 @@ MIDDLEWARE = [
 ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]  # novo
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))   # novo
+STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]  # novo se a pasta static estiver na pasta da aplicação app, altere para str(BASE_DIR.joinpath('app/static'))
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))   # novo 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # novo
 
 ```

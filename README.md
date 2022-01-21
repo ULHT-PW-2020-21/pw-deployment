@@ -49,7 +49,7 @@ db.sqlite3
 export DEBUG=True 
 ```
 
-* Em `config/settings.py` altere o valor para DEBUG:
+* Em `config/settings.py` altere o valor de DEBUG:
 ```python
 # config/settings.py
 [...]
@@ -98,15 +98,15 @@ DATABASES = {
 ```
 export DATABASE_URL=sqlite:///db.sqlite3
 ```
-* Heroku cria uma base de dados nova PostgreSQL, e cria uma variavel de configuração chamada `DATABASE_URL`. Como .env não é carregado no Heroku, o nosso projeto Django usará no Heroku esta configuração PosrtgreSQL.
-* com o ambiente virtual ativo, devemos instalar o adaptador de base de dados Psycopg, que põe o Python  a comunicar com bases de dados PostgreSQL.
+* O Heroku cria uma nova base de dados PostgreSQL, associada a uma variavel de configuração chamada `DATABASE_URL`. Como .env não é carregado no Heroku, o nosso projeto Django  no Heroku usará esta configuração PosrtgreSQL.
+* com o ambiente virtual ativo, devemos instalar o adaptador de base de dados Psycopg, que põe o Python a comunicar com bases de dados PostgreSQL.
 ```
 > pipenv install psycopg2-binary==2.8.6
 ```
-
+(se der erro remover `==2.8.6`)
 
 ## 7. Configuração dos ficheiros estáticos
-* Django não suporta o "serviço" de ficheiros staticos em produção
+* O Django não suporta o "serviço" de ficheiros staticos em produção
 * Devemos instalar o pacote `whitenoise` para *static file hosting*:
 ```
 > pipenv install whitenoise==5.1.0
@@ -192,7 +192,25 @@ web: gunicorn config.wsgi --log-file -
 > heroku run python manage.py migrate
 > heroku run python manage.py createsuperuser
 ```
-* deverá criar novos dados atraves do modo admin, pois é uma base de dados nova.
+* É uma base de dados nova, sem dados.
+
+## Migração dos dados da base de dados local para o Heroku
+Se tiver dados na sua base de dados local SQLite que queira carregar no Heroku:
+* exporte a base de dados da aplicação para um ficheiro JSON (no comando em baixo, substitua `myapp` pelo nome da sua aplicação)
+```
+python manage.py dumpdata myapp > database.json
+```
+   * pode especificar o formato e indentação do ficheiro  (no comando em baixo, substitua `nome_myapp` pelo nome da sua aplicação):
+   ``` 
+   py manage.py dumpdata myapp –-indent 2 –-format xml > database.xml
+   ```
+* carregue os dados na base de dados da sua palicação no Heroku, em PostgreSQL (no comando em baixo, substitua `myapp` pelo nome da sua aplicação):
+```
+py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata --format=json -"
+```
+   * pode carregar um ficheiro noutro formato (XML por exemplo), alterando no comando anterior o atributo format para o valor xml
+
+
 * Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
 
 ## Referências

@@ -194,8 +194,10 @@ web: gunicorn config.wsgi --log-file -
 ```
 * É uma base de dados nova, sem dados.
 
-### Migração dos dados da base de dados local para o Heroku
-Se tiver dados na sua base de dados local SQLite que queira carregar no Heroku:
+# Extras
+
+## Migração dos dados da base de dados local para o Heroku
+Se tiver dados na sua base de dados local SQLite que queira carregar no Heroku pode usar [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/):
 * exporte a base de dados da aplicação para um ficheiro JSON (no comando em baixo, substitua `myapp` pelo nome da sua aplicação)
 ```
 python manage.py dumpdata myapp > database.json
@@ -210,9 +212,17 @@ py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata
 ```
    * pode carregar um ficheiro noutro formato (XML por exemplo), alterando no comando anterior o atributo format para o valor xml
 
+## Atualizar aplicação no Heroku
 
-* Para sites maiores, [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/) permitem carregar dados  
+Se fez alterações locais e pretende atualizar o GitHub e o Heroku:
+```
+git add -A
+git commit -m "alterações"
+git push
+gut push heroku main
+```
 
+ 
 ## Referências
 * William Vincent, *Django for beginners*, 2020
 * DjangoProject, *[Deployment checklist](https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/)*

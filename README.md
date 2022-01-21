@@ -222,6 +222,16 @@ git push
 gut push heroku main
 ```
 
+Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previous-deployed-project-on-heroku-c778d555cd8a) ou [ali](https://riptutorial.com/heroku/example/26719/deploying-with-git). Poderá eventualmente necessitar de definir o seu projeto remoto.
+
+## Usando fork e branch para alterar um projeto de outros
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
  
 ## Referências
 * William Vincent, *Django for beginners*, 2020

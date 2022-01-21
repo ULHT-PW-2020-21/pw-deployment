@@ -194,7 +194,7 @@ web: gunicorn config.wsgi --log-file -
 ```
 * É uma base de dados nova, sem dados.
 
-## Migração dos dados da base de dados local para o Heroku
+### Migração dos dados da base de dados local para o Heroku
 Se tiver dados na sua base de dados local SQLite que queira carregar no Heroku:
 * exporte a base de dados da aplicação para um ficheiro JSON (no comando em baixo, substitua `myapp` pelo nome da sua aplicação)
 ```

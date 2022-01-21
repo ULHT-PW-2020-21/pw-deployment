@@ -12,7 +12,7 @@
 
 ## 1. Variáveis de ambiente
 
-Vamos criar um ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
+Na diretoria do manage.py, crie o ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar environs (eventualmente deverá precisar das plicas ''):
 ```
 > pipenv shell

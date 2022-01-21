@@ -8,7 +8,7 @@
     * A base de dados SQLite só serve em ambiente de desenvolvimento, devendo ser usada uma outra (usaremos PostgreSQL). .
     * Os ficheiros estáticos devem ser configurados para ambiente produção.
 * A seguir detalham-se todos os passos necessários.
-* **Exemplo duma aplicação foi criada seguindo estes passos: [GitHub](https://github.com/ULHT-PW-2020-21/pw-aula-django-02-deployed-in-heroku), [Heroku](http://pw-aula03.herokuapp.com/)**.
+* **Exemplo duma aplicação que foi criada seguindo estes passos: [GitHub](https://github.com/ULHT-PW-2020-21/pw-aula-django-02-deployed-in-heroku), [Heroku](http://pw-aula03.herokuapp.com/)**.
 
 ## 1. Variáveis de ambiente
 

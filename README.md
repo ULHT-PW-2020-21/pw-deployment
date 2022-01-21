@@ -10,7 +10,7 @@
 * A seguir detalham-se todos os passos necessários.
 * **Exemplo duma aplicação que foi criada seguindo estes passos: [GitHub](https://github.com/ULHT-PW-2020-21/pw-aula-django-02-deployed-in-heroku), [Heroku](http://pw-aula03.herokuapp.com/)**.
 
-## 1. Variáveis de ambiente
+## 1. .venv com variáveis do ambiente de desenvolvimento
 
 Na diretoria do manage.py, crie o ficheiro `.env` que guardará chaves e passwords assim como configurações específicas para ambiente desenvolvimento. Serão definidas como variáveis de ambiente em `.env`, que podem depois ser usadas noutros ficheiros. Para tal:
 * na linha de comando instalar environs (eventualmente deverá precisar das plicas ''):
@@ -32,7 +32,7 @@ env.read_env()
 * crie um novo ficheiro chamado `.env` na mesma pasta que contém o manage.py. (é um ficheiro escondido (hidden file), não listado com ls, pois começa com '.').
 
 
-## 2. .gitignore
+## 2. .gitignore com ficheiros que o GIT deve ignorar
 * crie o ficheiro `.gitignore` na diretoria do `manage.py`, indicando os ficheiros a ser ignorados pelo GIT:
 ```
 .env
@@ -42,7 +42,7 @@ db.sqlite3
 ```
 * o facto de não carregarmos `.env` para o Heroku permite que certas configurações só estejam ativas no ambiente de desenvolvimento.
 
-## 3. Debug 
+## 3. Debug ativo em desenvolvimento mas em produção não 
 * É necessário especificar que em desenvolvimento o modo DEBUG fique ativo, mas em produção não. 
 * em `.env` insira:
 ```
@@ -57,7 +57,7 @@ export DEBUG=True
 DEBUG = env.bool("DEBUG", default=False)
 ```
 
-## 4. ALLOWED HOSTS
+## 4. Host Heroku 
 * Em `settings.py`inclua o URL da aplicação Heroku como host em ALLOWED_HOSTS:
 ```python
 # config/settings.py
@@ -66,7 +66,7 @@ DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 ```
 
-## 5. SECRET_KEY
+## 5. SECRET_KEY guardada
 
 * Vamos mover o valor da variável SECRET_KEY (especifica do seu projeto) de settings.py para .env, definindo-a como variável de ambiente da seguinte forma (sem as plicas ').
 * Em `.env` insira:

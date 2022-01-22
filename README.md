@@ -224,6 +224,16 @@ gut push heroku main
 
 Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previous-deployed-project-on-heroku-c778d555cd8a) ou [ali](https://riptutorial.com/heroku/example/26719/deploying-with-git). Poderá eventualmente necessitar de definir o seu projeto remoto.
 
+
+## Consultando tabelas na BD PSQL no Heroku
+
+* No site Heroku, dashboard da app, selecionar postgresql 
+* copiar o comando heroku CLI e usar para aceder à BD (algo tipo `heroku pg:psql postgresql-fitted-60178 --app pictures-django-app`)
+* use comandos psql para ver a BD:
+   * `\dt` mostra as tabelas disponiveis
+   * `\dt+` mostra info extra sobre as tabelas
+   * `TABLE table_name;` mostra conteudo da tabela table_name
+
 ## Usando fork e branch para alterar um projeto de outros
 
 1. Fork it!

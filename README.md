@@ -212,18 +212,6 @@ py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata
 ```
    * pode carregar um ficheiro noutro formato (XML por exemplo), alterando no comando anterior o atributo format para o valor xml
 
-## Atualizar aplicação no Heroku
-
-Se fez alterações locais e pretende atualizar o GitHub e o Heroku:
-```
-git add -A
-git commit -m "alterações"
-git push
-gut push heroku main
-```
-
-Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previous-deployed-project-on-heroku-c778d555cd8a) ou [ali](https://riptutorial.com/heroku/example/26719/deploying-with-git). Poderá eventualmente necessitar de definir o seu projeto remoto.
-
 
 ## Consultando tabelas na BD PSQL no Heroku
 
@@ -235,6 +223,27 @@ Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previou
    * `\dt+` mostra info extra sobre as tabelas
    * `TABLE table_name;` mostra conteudo da tabela table_name
    * `TRUNCATE table_name;`apaga as linhas da tabela table_name
+
+
+## Atualização aplicação no Heroku
+
+Se fez alterações locais e pretende atualizar o GitHub e o Heroku:
+```
+git add -A
+git commit -m "alterações"
+git push
+gut push heroku main
+```
+
+Se houver mudança na base de dados
+* `python manage.py makemigrations` para criar instruções das alterações na base de dados
+* `heroku run python manage.py migrate` para migrar as alterações na base de dados
+* `heroku pg:psql postgresql-fitted-60178 --app nome_app_heroku` cria uma ligação com a BD (No site Heroku, dashboard da app, selecionar postgresql\settings\database credentials copiar o comando heroku CLI e usar para aceder à BD) 
+* `TRUNCATE table_name;`apaga as linhas da tabela table_name que foi modificada (eventualmente desnecessário, se tabela for substituida)
+* `python manage.py dumpdata myapp > database.json` para exportar BD para ficheiro JSON (no comando, alterar `myapp` para nome da aplicação)  
+* `py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata --format=json -"` para carregar dados no ficheiro JSON na BD PSQL do Heroku (no comando, alterar `myapp` para nome da aplicação)
+
+Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previous-deployed-project-on-heroku-c778d555cd8a) ou [ali](https://riptutorial.com/heroku/example/26719/deploying-with-git). Poderá eventualmente necessitar de definir o seu projeto remoto.
 
 ## Usando fork e branch para alterar um projeto de outros
 

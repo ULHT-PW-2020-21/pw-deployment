@@ -230,9 +230,11 @@ Mais detalhes encontra [aqui](https://medium.com/@sreebash/how-to-update-previou
 * No site Heroku, dashboard da app, selecionar postgresql\settings\database credentials
 * copiar o comando heroku CLI e usar para aceder à BD (algo tipo `heroku pg:psql postgresql-fitted-60178 --app pictures-django-app`)
 * use comandos psql para ver a BD:
+   * `heroku pg:psql postgresql-fitted-60178 --app pictures-django-app` cria uma ligação com a BD 
    * `\dt` mostra as tabelas disponiveis
    * `\dt+` mostra info extra sobre as tabelas
    * `TABLE table_name;` mostra conteudo da tabela table_name
+   * `TRUNCATE table_name;`apaga as linhas da tabela table_name
 
 ## Usando fork e branch para alterar um projeto de outros
 

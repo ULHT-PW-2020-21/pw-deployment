@@ -198,6 +198,7 @@ web: gunicorn config.wsgi --log-file -
 
 ## Migração dos dados da base de dados local para o Heroku
 Se tiver dados na sua base de dados local SQLite que queira carregar no Heroku pode usar [fixtures](https://docs.djangoproject.com/en/3.1/howto/initial-data/):
+* **para evitar problemas com carateres utf-8** certifique-se que no Windws settings, Language\Administrativa Language Settings\Change system locale\Region Settins tem ativada a opção [Use Unicode UTF-8 for worldwide language support](https://stackoverflow.com/questions/64457733/django-dumpdata-fails-on-special-characters) 
 * exporte a base de dados da aplicação para um ficheiro JSON (no comando em baixo, substitua `myapp` pelo nome da sua aplicação)
 ```
 python manage.py dumpdata myapp > database.json

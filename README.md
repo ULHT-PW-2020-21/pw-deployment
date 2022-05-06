@@ -141,7 +141,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 ```
 python manage.py collectstatic
 ```
-* em `base.html` inclua no início a etiqueta {% load static %}, para que os templates incluam ficheiros estaticos:
+* No seu layout de referencia/base (`layout.html` ou `base.html`) inclua no início a etiqueta {% load static %}, para que os templates incluam ficheiros estaticos:
 ```<!-- templates/base.html -->
 <!DOCTYPE html>
 {% load static %}

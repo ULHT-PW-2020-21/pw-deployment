@@ -194,20 +194,6 @@ heroku run python manage.py createsuperuser
 * É uma base de dados nova, sem dados.
 
 
-# Alterações
-
-* pode sempre clone da sua aplicação:
-```bash
-$ heroku login
-$ heroku git:clone -a nome-da-sua-aplicacao
-
-Faça as alterações e carregue-as com:
-```bash
-$ git add .
-$ git commit -am "make it better"
-$ git push heroku master
-```
-
 # Extras
 
 ## Migração dos dados da base de dados local para o Heroku
@@ -238,6 +224,22 @@ py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata
    * `\dt+` mostra info extra sobre as tabelas
    * `TABLE table_name;` mostra conteudo da tabela table_name
    * `TRUNCATE table_name;`apaga as linhas da tabela table_name
+
+
+# Clonar a app no Heroku
+
+* pode sempre fazer um clone da sua aplicação no Heroku da seguinte forma:
+```bash
+$ heroku login
+$ heroku git:clone -a nome-da-sua-aplicacao
+```
+
+* Faça as alterações e carregue-as novamente com:
+```bash
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+```
 
 
 ## Atualização aplicação no Heroku

@@ -181,6 +181,8 @@ heroku addons:create heroku-postgresql:hobby-dev
 ```
 * o último comando cria uma base de dados postgresql. Verá que na linha de comandos indica que cria um valor para a variável DATABASE_URL
 * devemos definir apenas a SECRET_KEY, copiando de .env e correndo o comando seguinte colocando a SECRET_KEY entre plicas ''; se na SECRET_KEY tiver carateres `&` e `)`, coloque-os entre "":
+* Depois lançamos a aplicação com o comando `heroku ps:scale web=1` , escalando-a a um 'dyno', i.e., teremos um servidor correndo a nossa aplicação.
+
 ```
 heroku config:set SECRET_KEY='django-insecure-#nvkx1%+=m5nb9g^6a4k@!@&f@d@&v3!e7^#-1h8lo#)f9r9qy'
 git push heroku main

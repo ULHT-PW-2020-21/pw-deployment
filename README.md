@@ -207,7 +207,7 @@ python manage.py dumpdata myapp > database.json
    ``` 
    py manage.py dumpdata myapp –-indent 2 –-format xml > database.xml
    ```
-* carregue os dados na base de dados da sua palicação no Heroku, em PostgreSQL (no comando em baixo, substitua `myapp` pelo nome da sua aplicação):
+* carregue os dados na base de dados da sua aplicação no Heroku, em PostgreSQL (no comando em baixo, substitua `myapp` pelo nome da sua aplicação):
 ```
 py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata --format=json -"
 ```

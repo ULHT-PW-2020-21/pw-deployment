@@ -216,7 +216,7 @@ py ./manage.py dumpdata myapp | heroku run --no-tty "python ./manage.py loaddata
 ```
    * pode carregar um ficheiro noutro formato (XML por exemplo), alterando no comando anterior o atributo format para o valor xml
 
-**Atenção que Heroku não guarda imagens e ficheiros carregados através de formulários: veja mais detalhes [aqui](https://www.dothedev.com/blog/heroku-django-store-your-uploaded-media-files-for-free/). deverá usar um serviço tal como o Cloudinary, para seu armazenamento.**
+**Atenção que Heroku não guarda imagens e ficheiros carregados através de formulários: veja mais detalhes [aqui](https://www.dothedev.com/blog/heroku-django-store-your-uploaded-media-files-for-free/). deverá usar um serviço tal como o Cloudinary, para seu armazenamento. Veja detalhes [aqui](https://github.com/ULHT-PW/pw-photos)**
 
 ## Consultando tabelas na BD PSQL no Heroku
 

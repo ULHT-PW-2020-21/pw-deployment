@@ -248,7 +248,7 @@ $ heroku git:clone -a nome-da-sua-aplicacao
 ```bash
 $ git add .
 $ git commit -am "make it better"
-$ git push heroku master
+$ git push heroku main
 ```
 
 
@@ -259,7 +259,7 @@ Se fez alterações locais e pretende atualizar o GitHub e o Heroku:
 git add -A
 git commit -m "alterações"
 git push
-gut push heroku main
+git push heroku main
 ```
 
 Se houver mudança na base de dados

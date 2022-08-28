@@ -131,7 +131,7 @@ MIDDLEWARE = [
 ]
 
 STATIC_URL = '/nome_aplicacao/static/'    # substitua nome_aplicacao pelo nome da sua aplicação
-STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]  # novo. se a pasta static estiver na pasta da aplicação app, altere para str(BASE_DIR.joinpath('app/static'))
+STATICFILES_DIRS = [str(BASE_DIR.joinpath('app/static'))]  # novo. se a pasta static estiver na pasta do projeto, altere para str(BASE_DIR.joinpath('static'))
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))   # novo 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # novo
 
